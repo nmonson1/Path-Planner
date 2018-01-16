@@ -10,8 +10,7 @@ int main(){
   double reduce_factor = 1.0/32.0; //VT MOD (Downsample map)
   bool vis = true; //VT MOD (Change to true to see progress)
 
-  std::vector<cv::Point> path = find_maximally_persistence_path(start, goal, mapFilename, obsSizeThresh, reduce_factor, vis);
+  std::vector<cv::Point> path = call_find_path(start, goal, mapFilename, obsSizeThresh, reduce_factor, vis);
 
   return 0;
-
 }

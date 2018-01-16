@@ -24,9 +24,11 @@ double path_distance(const std::vector< cv::Point >& p1, const std::vector< cv::
   return err;
 }
 
-std::vector<cv::Point> find_maximally_persistence_path(cv::Point start, cv::Point goal, std::string mapFilename, int obsSizeThresh, double reduce_factor, bool vis)
-{
-  cv::Mat obs_map = cv::imread(mapFilename, CV_LOAD_IMAGE_GRAYSCALE);
+std::vector<cv::Point> find_maximally_persistent_path(const cv::Point& oldstart, const cv::Point& oldgoal, const cv::Mat& oldmap, const int& oldThresh, const double& reduce_factor, const bool& vis){
+  cv::Point start = oldstart;
+  cv::Point goal = oldgoal;
+  cv::Mat obs_map = oldmap;
+  int obsSizeThresh = oldThresh;
   start.x *=reduce_factor;
   start.y *=reduce_factor;
   goal.x *=reduce_factor;
@@ -180,5 +182,10 @@ std::vector<cv::Point> find_maximally_persistence_path(cv::Point start, cv::Poin
   }
 
   return max_path;
+}
+
+std::vector<cv::Point> call_find_path(cv::Point start, cv::Point goal, std::string mapFilename, int obsSizeThresh, double reduce_factor, bool vis){
+  cv::Mat obs_map = cv::imread(mapFilename, CV_LOAD_IMAGE_GRAYSCALE);
+  return find_maximally_persistent_path(start, goal, obs_map, obsSizeThresh, reduce_factor, vis);
 }
 
